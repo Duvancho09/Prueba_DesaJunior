@@ -1,0 +1,32 @@
+<navbar/>
+<div class="container">
+    
+    <section class="sectionInfo">
+        <h2>TIENDA VIRTUAL DE VENTA DE COMPUTADORES GAMERS</h2>
+        <p>Aca podras encontrar diferentes tipos de computadores como lo son de: Alta gama, Gama media y Gama baja, con diferentes tipos de especificaciones y caracteristicas</p>
+    </section>
+    
+    <section class="gallery">
+        <div class="image-card" *ngFor="let image of filteredImages">
+            <img class="imagen" [src]="image.url" [alt]="image.name">
+            <p class="image-title">&#64;{{ image.author }}</p>
+            <p class="image-category">{{ image.name }}</p>
+            <p class="image-category">{{ image.category }}</p>
+            <p class="image-price">Precio</p>
+            <button class="detail-btn" (click)="compraImagen(image)">Comprar</button>
+        </div>
+        
+        <div class="image-card" *ngFor="let creacion of misCreaciones; let i = index">
+            <img class="imagen" [src]="creacion.url" [alt]="creacion.name">
+            <p class="image-title">&#64;{{ creacion.author }}</p>
+            <p class="image-category">{{ creacion.name }}</p>
+            <p class="image-category">{{ creacion.category }}</p>
+            <p class="image-price">{{ creacion.price }}</p>
+            <div class="botones">
+
+                <button class="detail-btn" (click)="Actualizar(i)">ACTUALIZAR</button>
+                <button class="detail-btn2" (click)="Confirmar(i)">ELIMINAR</button>
+            </div>
+        </div>
+    </section>
+</div>

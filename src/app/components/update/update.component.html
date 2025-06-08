@@ -1,0 +1,16 @@
+<navbar/>
+<div class="container">
+    <section class="gallery">
+        <div class="image-card">
+            <form (ngSubmit)="actualizarCreacion()">
+                <img class="imagen" [src]="creacion.url" alt="Vista de la imagen">
+                <input type="file" (change)="onFileChange($event)">
+                <input class="image-title" type="text" [(ngModel)]="creacion.author" name="author">
+                <input class="image-category" type="text" [(ngModel)]="creacion.name" name="name">
+                <input class="image-category" type="text" [(ngModel)]="creacion.category" name="category">
+                <input class="image-price" type="number" [(ngModel)]="creacion.price" name="price">
+                <button type="submit" class="detail-btn">ACTUALIZAR</button>
+            </form>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,18 @@
+<div class="login-container">
+    <div class="panel-left">
+        <h2>¿Eres un usuario nuevo?</h2>
+        <p>Registrate para poder acceder a nuestra tienda virtual</p>
+        <button class="btn" (click)="goToRegister()">REGISTRARSE</button>
+    </div>
+    <div class="panel-right">
+        <h2>Iniciar Sesión</h2>
+        <p>Si ya tienes un usuario y una contraseña ingresa los datos para acceder a la tienda</p>
+        <form [formGroup]="dataForm" (ngSubmit)="ingresar()">
+            <label for="username">USUARIO</label>
+            <input type="text" id="username" formControlName="username" placeholder="Ingrese su usuario" required autocomplete="off">
+            <label for="password">CONTRASEÑA</label>
+            <input type="password" id="password" formControlName="password" placeholder="Ingrese su contraseña" required autocomplete="off">
+            <button class="btn" type="submit">INGRESAR</button>
+        </form>
+    </div>
+  </div>

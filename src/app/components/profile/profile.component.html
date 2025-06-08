@@ -1,0 +1,48 @@
+<navbar/>
+<div class="profile-container">
+      <img src="assets/imgs/Fondo.png" alt="Fondo de perfil" class="banner-img" />
+    
+      <div class="profile-picture-wrapper">
+        <label for="fileInput">
+          <img [src]="profileImage" alt="Foto de perfil" class="profile-picture" />
+        </label>
+      </div>
+    
+      <a href="/create" aria-label="link para vender un computador">
+        <button class="upload-btn" (click)="triggerFileInput()" aria-label="boton para vender">
+          VENDER COMPUTADOR
+        </button>
+      </a>
+    
+      <div class="info-section">
+        <h2>INFORMACIÓN</h2>
+        <div class="underline"></div>
+        <form [formGroup]="dateProfileForm" (ngSubmit)="guardarDatos()">
+          <div class="row">
+            <div class="column">
+              <label>NOMBRE DE USUARIO</label>
+              <input type="text" formControlName="username" placeholder="Nombre de usuario" autocomplete="off" required>
+            </div>
+            <div class="column">
+              <label>CORREO ELECTRONICO</label>
+              <input type="text" formControlName="email" placeholder="Correo electronico" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="column">
+              <label>CONTRASEÑA</label>
+              <input type="text" formControlName="password" placeholder="Contraseña" autocomplete="off" required>
+            </div>
+            <div class="column">
+              <label>CONFIRMAR CONTRASEÑA</label>
+              <input type="text" formControlName="confirmPassword" placeholder="Confirmar contraseña" autocomplete="off" required>
+            </div>
+          </div>
+          <div class="underline1"></div>
+
+          <button type="submit" class="upload-btn">GUARDAR CAMBIOS</button>
+        </form>
+        <button type="button" class="delete-btn" (click)="eliminarCuenta()">ELIMINAR CUENTA</button>
+      </div>
+    </div> 

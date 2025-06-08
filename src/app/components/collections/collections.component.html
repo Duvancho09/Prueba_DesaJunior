@@ -1,0 +1,16 @@
+<navbar/>
+<div class="container">
+    <section class="sectionInfo">
+        <h2>Mis compras:</h2>
+    </section>
+    
+    <section class="gallery">
+        <div class="image-card" *ngFor="let compra of misCompras; let i = index">
+            <img class="imagen" [src]="compra.url" [alt]="compra.name">
+            <p>{{ compra.name }}</p>
+            <p>{{ compra.author }}</p>
+            <p>{{ compra.category }}</p>
+            <button class="detail-btn" (click)="Confirmar(i)">ELIMINAR</button>
+        </div>
+    </section>
+</div>

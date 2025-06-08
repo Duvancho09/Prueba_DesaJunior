@@ -1,0 +1,14 @@
+<navbar/>
+<section class="gallery">
+    <div class="image-card">
+        <form [formGroup]="dataForm" (ngSubmit)="guardarCreacion()">
+            <input type="file" (change)="onFileChange($event)" required>
+            <input type="text" formControlName="name" placeholder="Nombre" autocomplete="off" required>
+            <input type="text" formControlName="author" placeholder="Autor" autocomplete="off" required>
+            <input type="text" formControlName="category" placeholder="Categoria" autocomplete="off" required>
+            <input type="number" formControlName="price" placeholder="Precio" autocomplete="off" required>
+            <img *ngIf="dataForm.get('url')?.value" [src]="dataForm.get('url')?.value" alt="Vista previa de la imagen" width="150">
+            <button type="submit" class="detail-btn">GUARDAR</button>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+<header class="header" @translateY>
+  <div class="header-container">
+    <div class="logo animacion-entrada">
+      <a href="/home">
+        <button>
+          Tienda<span class="highlight">Virtual</span>
+        </button>
+      </a>
+    </div>
+
+    <div class="menu animacion-entrada">
+        <a href="/collections" aria-label="link de categorias">
+            <button class="dropbtn" aria-label="boton de categorias">
+                Mis colecciones
+            </button>
+        </a>
+    </div>
+    
+    <div class="profile-icon animacion-entrada">
+      <a href="/profile" aria-label="enlace para entrar a editar el perfil">
+        <img src="assets/imgs/perfil.png" (click)="onProfileClick()" alt="Perfil">
+      </a>
+    </div>
+  </div>
+</header>

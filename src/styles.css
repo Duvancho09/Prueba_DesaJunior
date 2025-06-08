@@ -1,1 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --azul-principal: #4D6DBC;
+  --azul-claro:#93D9E9;
+  --azul-oscuro:#365271;
+  --azul-oscuro2:#002547;
+  --black:#212529;
+  --azul-sidebar: #5C769E;
+  --azul-fondo:#C7CBE2;
+  --blanco: #F1FFDF;
+  --gris: #dbdbe2;
+  --gris-oscuro: rgb(153, 153, 153);
+  --error: #771b1b;
+
+  --letra-principal: 'Nunito', sans-serif;
+  --letra-secundaria: Verdana;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--letra-principal);
+}
+html{
+  height: 100%;
+  background-color: var(--azul-fondo);  
+}
+body {
+  height: 100%;
+  margin:0 0;
+  padding:0;
+  font-family: sans-serif;
+  background-color: var(--azul-fondo);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a{
+  text-decoration: none;
+  color: var(--black);
+}
+
+body {
+  background: linear-gradient(135deg, #1a1a40 20%, #25053d 50%, #090979 80%);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  height:auto;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  /* position: relative; */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  background: radial-gradient(circle, rgba(255, 0, 255, 0.8), rgba(0, 0, 255, 0.2));
+  border-radius: 50%;
+  filter: blur(80px);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+body::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: linear-gradient(to top, rgba(20, 20, 80, 0.8), rgba(0, 0, 0, 0));
+  z-index: 1;
+}

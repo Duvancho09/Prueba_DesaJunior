@@ -1,0 +1,29 @@
+<div class="register-container">
+    <form [formGroup]="registerForm" (ngSubmit)="registrarse()">
+        <h2>Registra tus datos para poder acceder a la tienda virtual</h2>
+        <label for="username">USUARIO</label>
+        <input type="text" id="username" formControlName="username" placeholder="Ingrese su usuario" required autocomplete="off">
+        <div *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched" class="register-error">
+            El usuario debe tener entre 3 y 20 caracteres
+        </div>
+        <label for="email">CORREO ELECTRÓNICO</label>
+        <input type="email" id="email" formControlName="email" placeholder="Ingrese su correo electrónico" required autocomplete="off">
+        <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="register-error">
+            El correo debe tener &#64; y finalizar con .com
+        </div>
+        <label for="password">CONTRASEÑA</label>
+        <input type="password" id="password" formControlName="password" placeholder="Ingrese su contraseña" required autocomplete="off">
+        <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="register-error">
+            La contraseña debe tener entre 5 y 20 caracteres
+        </div>
+        <label for="confirmPassword">CONFIRMAR CONTRASEÑA</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirme su contraseña" required autocomplete="off">
+        <div *ngIf="registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched" class="register-error">
+            La confirmacion de la contraseña debe tener entre 5 y 20 caracteres
+        </div>
+        <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.touched" class="register-error">
+            Las contraseñas no coinciden.
+        </div>
+        <button class="btn" type="submit" >REGISTRARSE</button>
+    </form>
+</div>
