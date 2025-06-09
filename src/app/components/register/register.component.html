@@ -16,9 +16,9 @@
         <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="register-error">
             La contraseña debe tener entre 5 y 20 caracteres
         </div>
-        <label for="confirmPassword">CONFIRMAR CONTRASEÑA</label>
-        <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirme su contraseña" required autocomplete="off">
-        <div *ngIf="registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched" class="register-error">
+        <label for="confirmpassword">CONFIRMAR CONTRASEÑA</label>
+        <input type="password" id="confirmpassword" formControlName="confirmpassword" placeholder="Confirme su contraseña" required autocomplete="off">
+        <div *ngIf="registerForm.controls['confirmpassword'].invalid && registerForm.controls['confirmpassword'].touched" class="register-error">
             La confirmacion de la contraseña debe tener entre 5 y 20 caracteres
         </div>
         <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.touched" class="register-error">

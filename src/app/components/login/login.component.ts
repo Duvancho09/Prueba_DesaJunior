@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,27 +18,53 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.maxLength(30)])
   });
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private http: HttpClient){}
 
   ingresar(){
-    localStorage.setItem('usuario', JSON.stringify({ username: 'Daniel Ramirez' }));
     if(this.dataForm.valid){
-      let data = this.dataForm.value
-      console.log(data);
-      Swal.fire(
-        'Datos correctos',
-        'Disfruta de la página y las cosas que trae para ti!!!',
-        'success'
-      )
-      this.router.navigate(['/home']);
-    }else{
-      Swal.fire({
-        icon: 'error',
-        title: 'Por favor revisa todos los campos',
-        text: '¡Los campos estan vacios o no son validos!',
-      })
+      const loginData = this.dataForm.value;
+      this.http.post<any>('http://localhost:8080/api/vendedores/login', loginData)
+      .subscribe({
+        next: res => {
+          localStorage.setItem('usuario', JSON.stringify({ username: res.username }));
+          Swal.fire(
+            'Datos correctos',
+            'Disfruta de la página y las cosas que trae para ti!!!',
+            'success'
+          );
+          this.router.navigate(['/home']);
+        },
+        error: err => {
+          if (err.status === 404) {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Usuario no encontrado',
+              text: 'Regístrate para poder acceder.',
+            });
+          } else if (err.status === 401) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Contraseña incorrecta',
+              text: 'Revisa tus credenciales e intenta de nuevo.',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error del servidor',
+              text: 'Inténtalo más tarde.',
+            });
+          }
+        }
+      });
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Formulario inválido',
+      text: 'Por favor completa todos los campos correctamente.',
+    });
     }
   }
+  
   goToRegister() {
     this.router.navigate(['/register']);
   }

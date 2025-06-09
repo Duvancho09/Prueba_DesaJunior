@@ -4,11 +4,15 @@
         <div class="image-card">
             <form (ngSubmit)="actualizarCreacion()">
                 <img class="imagen" [src]="creacion.url" alt="Vista de la imagen">
+                <div *ngIf="creacion.imagen">
+                    <label>Imagen actual:</label><br>
+                    <img [src]="getImagenUrl()" alt="Imagen actual" style="max-width: 200px; border-radius: 10px; margin-top: 10px;"/>
+                </div>
                 <input type="file" (change)="onFileChange($event)">
-                <input class="image-title" type="text" [(ngModel)]="creacion.author" name="author">
-                <input class="image-category" type="text" [(ngModel)]="creacion.name" name="name">
-                <input class="image-category" type="text" [(ngModel)]="creacion.category" name="category">
-                <input class="image-price" type="number" [(ngModel)]="creacion.price" name="price">
+                <input class="image-title" type="text" [(ngModel)]="creacion.autor" name="autor">
+                <input class="image-category" type="text" [(ngModel)]="creacion.nombre" name="nombre">
+                <input class="image-category" type="text" [(ngModel)]="creacion.categoria" name="categoria">
+                <input class="image-price" type="number" [(ngModel)]="creacion.precio" name="precio">
                 <button type="submit" class="detail-btn">ACTUALIZAR</button>
             </form>
         </div>

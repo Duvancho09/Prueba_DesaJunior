@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import Swal from 'sweetalert2';
+import { VentaService } from '../service/venta.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-collections',
@@ -12,14 +15,57 @@ import Swal from 'sweetalert2';
 })
 export class CollectionsComponent {
   misCompras: any[] = [];
+  producto: any;
 
-  ngOnInit(){
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const username = currentUser.username;
-
-    const purchases = JSON.parse(localStorage.getItem('purchases') || '{}');
-    this.misCompras = purchases[username] || [];
+  constructor(private ventaService: VentaService, private router: Router) {
+    const nav = this.router.getCurrentNavigation();
+    this.producto = nav?.extras?.state?.['producto'];
   }
+
+  ngOnInit(): void{
+    const navigation = this.router.getCurrentNavigation();
+    this.producto = navigation?.extras.state?.['producto'];
+
+    if(this.producto){
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+      const username = currentUser.username;
+
+       const nuevaVenta = {
+        nombreProducto: this.producto.name,
+        autor: this.producto.autor,
+        categoria: this.producto.categoria,
+        precio: this.producto.precio,
+        imagen: this.producto.imagen,
+        comprador: username,
+        fecha: new Date()
+
+    };
+
+    this.ventaService.registrarVenta(nuevaVenta).subscribe({
+      next: () => {
+        Swal.fire('Éxito', 'Compra registrada correctamente', 'success');
+        this.cargarCompras(username);
+      },
+      error: (error) => {
+        console.log('Error al registrar la compra:', error);
+        Swal.fire('Error', 'No se pudo registrar la compra', 'error');
+      }
+    });
+
+    
+  }
+}
+  cargarCompras(username: string): void {
+  this.ventaService.obtenerVentasPorComprador(username).subscribe({
+    next: (compras: any) => {
+      this.misCompras = compras;
+    },
+    error: (error) => {
+      console.log('Error al obtener compras:', error);
+      Swal.fire('Error', 'No se pudieron cargar las compras', 'error');
+    }
+  });
+}
 
   Confirmar(index: number): void{
     Swal.fire({
@@ -37,15 +83,7 @@ export class CollectionsComponent {
   }
 
   eliminarCompra(index: number): void{
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const username = currentUser.username;
-
     this.misCompras.splice(index, 1);
-
-    const purchases = JSON.parse(localStorage.getItem('purchases') || '{}');
-    purchases[username] = this.misCompras;
-    localStorage.setItem('purchases', JSON.stringify(purchases));
-
     Swal.fire({
       icon: 'success',
       title: '¡Compra eliminada!',

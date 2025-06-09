@@ -6,10 +6,11 @@
     
     <section class="gallery">
         <div class="image-card" *ngFor="let compra of misCompras; let i = index">
-            <img class="imagen" [src]="compra.url" [alt]="compra.name">
-            <p>{{ compra.name }}</p>
-            <p>{{ compra.author }}</p>
-            <p>{{ compra.category }}</p>
+            <img class="imagen" [src]="'http://localhost:8080/api/imagenes/' + compra.imagen" [alt]="compra.nombreProducto">
+            <p>{{ compra.nombreProducto }}</p>
+            <p>{{ compra.autor }}</p>
+            <p>{{ compra.categoria }}</p>
+            <p>${{ compra.precio }}</p>
             <button class="detail-btn" (click)="Confirmar(i)">ELIMINAR</button>
         </div>
     </section>

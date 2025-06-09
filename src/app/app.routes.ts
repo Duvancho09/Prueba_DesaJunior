@@ -14,5 +14,6 @@ export const routes: Routes = [
     { path: "collections", component: CollectionsComponent },
     { path: "profile", component: ProfileComponent },
     { path: "create", component: CreateComponent },
-    { path: "update", component: UpdateComponent }
+    // { path: "update", component: UpdateComponent }
+    { path: 'update/:id', component: UpdateComponent }
 ];

@@ -8,24 +8,25 @@
     
     <section class="gallery">
         <div class="image-card" *ngFor="let image of filteredImages">
-            <img class="imagen" [src]="image.url" [alt]="image.name">
-            <p class="image-title">&#64;{{ image.author }}</p>
+            <img class="imagen" [src]="'http://localhost:8080/uploads/' + image.imagen" [alt]="image.name">
+            <p class="image-title">&#64;{{ image.autor }}</p>
             <p class="image-category">{{ image.name }}</p>
-            <p class="image-category">{{ image.category }}</p>
+            <p class="image-category">{{ image.categoria }}</p>
             <p class="image-price">Precio</p>
             <button class="detail-btn" (click)="compraImagen(image)">Comprar</button>
         </div>
         
         <div class="image-card" *ngFor="let creacion of misCreaciones; let i = index">
-            <img class="imagen" [src]="creacion.url" [alt]="creacion.name">
-            <p class="image-title">&#64;{{ creacion.author }}</p>
-            <p class="image-category">{{ creacion.name }}</p>
-            <p class="image-category">{{ creacion.category }}</p>
-            <p class="image-price">{{ creacion.price }}</p>
+            <img class="imagen"[src]="'http://localhost:8080/uploads/' + creacion.imagen" [alt]="creacion.nombre">
+            <p class="image-title">&#64;{{ creacion.autor }}</p>
+            <p class="image-category">{{ creacion.nombre }}</p>
+            <p class="image-category">{{ creacion.categoria }}</p>
+            <p class="image-price">{{ creacion.precio }}</p>
             <div class="botones">
-
-                <button class="detail-btn" (click)="Actualizar(i)">ACTUALIZAR</button>
-                <button class="detail-btn2" (click)="Confirmar(i)">ELIMINAR</button>
+                <a [routerLink]="['/update', creacion.id]">
+                    <button class="detail-btn">ACTUALIZAR</button>
+                </a>
+                <button class="detail-btn2" (click)="Confirmar(creacion.id)">ELIMINAR</button>
             </div>
         </div>
     </section>

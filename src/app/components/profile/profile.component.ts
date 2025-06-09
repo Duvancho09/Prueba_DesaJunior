@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { NavbarComponent } from '../navbar/navbar.component';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { VentaService } from '../service/venta.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ export class ProfileComponent {
   profileImage: string = 'assets/imgs/perfil.png';
   userData: any;
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private vendedorService: VentaService){}
 
   dateProfileForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -31,58 +32,66 @@ export class ProfileComponent {
     // }
     if (storedData){
       const userData = JSON.parse(storedData);
+      this.userData = userData;
+
       this.dateProfileForm.patchValue({
-        username: userData.username || '',
-        email: userData.email || '',
-        password: userData.password || '',
-        confirmPassword: userData.confirmPassword || ''
+        username: userData.username,
+        email: userData.email,
+        password: userData.password,
+        confirmPassword: userData.confirmPassword
       });
-      this.userData = JSON.parse(storedData);
+      // this.userData = JSON.parse(storedData);
     }
   }
 
   triggerFileInput(){}
 
   guardarDatos(){
-    if (this.dateProfileForm.valid){
-      const updatedData = this.dateProfileForm.value;
-      localStorage.setItem('userData', JSON.stringify(updatedData));
-      // console.log(updatedData)
-      Swal.fire({
-        icon: 'success',
-        title: '¡Datos actualizados!',
-        text: 'Tus datos fueron actualizados correctamente',
-        showConfirmButton: true
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al actualizar datos',
-        text: 'Por favor revisa y completa todos los campos correctamente',
-        showConfirmButton: true
+    if(this.dateProfileForm.valid && this.userData){
+      const id = this.userData.id;
+
+      this.vendedorService.actualizarVendedor(id, this.dateProfileForm.value).subscribe((res) => {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Datos actualizados!',
+          text: 'Tus datos fueron actualizados correctamente',
+          showConfirmButton: true
+        });
+      },
+      (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudieron actualizar los datos',
+          showConfirmButton: true
       });
     }
+  );
   }
+}
 
-  eliminarCuenta(){
-    Swal.fire({
-      icon: 'warning',
-      title: '¿Estas seguro de eliminar la cuenta?',
-      text: 'Esto eliminara tu cuenta y no podras recuperarla',
-      showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed){
-        localStorage.removeItem('userData');
-
-        window.location.replace('/');
-
-        // this.router.navigate(['']).then(() => {
-        //   window.location.replace('/login');
-        // });
-      }
-    });
-  }
+  eliminarCuenta() {
+  Swal.fire({
+    icon: 'warning',
+    title: '¿Estas seguro de eliminar la cuenta?',
+    text: 'Esto eliminará tu cuenta permanentemente',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed && this.userData?.id) {
+      this.vendedorService.eliminarVendedor(this.userData.id).subscribe(
+        () => {
+          Swal.fire('Eliminado', 'Tu cuenta fue eliminada', 'success');
+          localStorage.removeItem('userData');
+          window.location.replace('/');
+        },
+        (err) => {
+          Swal.fire('Error', 'No se pudo eliminar tu cuenta', 'error');
+        }
+      );
+    }
+  });
+}
 
 }

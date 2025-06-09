@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl,FormGroup, FormsModule, ReactiveFormsModule, Validators,  } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,20 +16,29 @@ export class RegisterComponent {
     username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
+    confirmpassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
   }, this.passwordsMatch);
 
    passwordsMatch(formGroup: AbstractControl): { [key: string]: boolean } | null {
   const password = formGroup.get('password')?.value;
-  const confirmPassword = formGroup.get('confirmPassword')?.value;
-  return password === confirmPassword ? null : { passwordMismatch: true };
+  const confirmpassword = formGroup.get('confirmpassword')?.value;
+  return password === confirmpassword ? null : { passwordMismatch: true };
 }
 
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private http: HttpClient){}
 
   registrarse(){
+    this.http.post('http://localhost:8080/api/vendedores', this.registerForm.value).subscribe({
+      next: res => {
+        console.log('Conectado y registrado en la base de datos', res);
+      },
+      error: err => {
+        console.log('Error al conectar o registrar los datos', err);
+      }
+    });
     if (this.registerForm.valid){
+      console.log(this.registerForm.value);
       let data = this.registerForm.value
       localStorage.setItem('userData', JSON.stringify(data));
       Swal.fire(
